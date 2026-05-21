@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NewsFlash</title>
+  <meta name="description" content="India's trusted digital newsroom" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div id="top-bar">
+  <div class="container">
+    <span id="top-date"></span>
+    <div id="top-links">
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <a href="#">Subscribe</a>
+    </div>
+  </div>
+</div>
+
+<!-- MASTHEAD -->
+<header id="masthead">
+  <div class="container">
+    <div id="logo" onclick="showHome()">News<span>Flash</span></div>
+    <div id="masthead-actions">
+      <form id="search-form" onsubmit="handleSearch(event)">
+        <input id="search-input" type="text" placeholder="Search news…" autocomplete="off" />
+        <button id="search-btn" type="submit">🔍</button>
+      </form>
+      <button id="admin-btn" onclick="openAdmin()">⚙ Admin</button>
+    </div>
+  </div>
+</header>
+
+<!-- NAVIGATION -->
+<nav id="main-nav">
+  <div class="container">
+    <ul id="nav-links">
+      <li><a href="#" onclick="filterCategory('all')" class="active">Home</a></li>
+      <li><a href="#" onclick="filterCategory('India')">India</a></li>
+      <li><a href="#" onclick="filterCategory('World')">World</a></li>
+      <li><a href="#" onclick="filterCategory('Business')">Business</a></li>
+      <li><a href="#" onclick="filterCategory('Technology')">Tech</a></li>
+      <li><a href="#" onclick="filterCategory('Sports')">Sports</a></li>
+      <li><a href="#" onclick="filterCategory('Science')">Science</a></li>
+      <li><a href="#" onclick="filterCategory('Entertainment')">Entertainment</a></li>
+      <li><a href="#" onclick="filterCategory('Health')">Health</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- BREAKING TICKER -->
+<div id="breaking-bar">
+  <div class="container">
+    <span id="breaking-label">⚡ BREAKING</span>
+    <div id="ticker-wrap">
+      <div id="ticker-inner" id="ticker-inner">
+        <span>Loading latest headlines…</span>
+        <span>Loading latest headlines…</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOME PAGE -->
+<main id="home-page">
+  <div class="container">
+
+    <!-- HERO -->
+    <section id="hero-section" style="margin-bottom:32px">
+      <div id="hero-grid">
+        <div id="hero-main" class="hero-main"></div>
+        <div id="hero-side" class="hero-side"></div>
+      </div>
+    </section>
+
+    <!-- LATEST + SIDEBAR -->
+    <div id="content-wrap">
+      <section id="latest-section">
+        <div class="section-title" id="section-label">Latest News</div>
+        <div id="articles-grid" class="articles-grid"></div>
+        <div id="load-more-wrap" class="hidden">
+          <button id="load-more-btn" onclick="loadMoreArticles()">Load More</button>
+        </div>
+        <div id="articles-empty" class="empty-state hidden">
+          <div class="icon">📰</div>
+          <p>No articles found. Check back soon!</p>
+        </div>
+      </section>
+
+      <aside id="sidebar">
+        <div class="sidebar-widget">
+          <div class="section-title">Trending</div>
+          <ul id="trending-list" class="trending-list"></ul>
+        </div>
+        <div class="sidebar-widget">
+          <div class="section-title">Browse by Category</div>
+          <div class="category-tags" id="category-tags"></div>
+        </div>
+      </aside>
+    </div>
+
+  </div>
+</main>
+
+<!-- ARTICLE PAGE -->
+<div id="article-page">
+  <div class="container">
+    <div class="article-wrap">
+      <article class="article-content">
+        <div class="article-back" onclick="showHome()">← Back to Home</div>
+        <div id="article-category-label" class="article-category-label"></div>
+        <h1 id="article-title"></h1>
+        <div class="article-meta-bar">
+          <div class="author-avatar" id="author-avatar"></div>
+          <div class="author-info">
+            <div class="author-name" id="author-name"></div>
+            <div class="article-date" id="article-date"></div>
+          </div>
+          <div class="share-btns">
+            <button class="share-btn whatsapp" onclick="shareArticle('whatsapp')">WhatsApp</button>
+            <button class="share-btn twitter"  onclick="shareArticle('twitter')">𝕏 Share</button>
+            <button class="share-btn facebook" onclick="shareArticle('facebook')">Facebook</button>
+          </div>
+        </div>
+        <img id="article-hero-img" class="article-hero-img hidden" src="" alt="" />
+        <p id="article-img-caption" class="article-img-caption hidden"></p>
+        <div id="article-highlights" class="article-highlights hidden">
+          <h4>Key Highlights</h4>
+          <ul id="highlights-list"></ul>
+        </div>
+        <div id="article-body"></div>
+        <div id="article-sources" class="hidden" style="margin-top:32px;padding-top:16px;border-top:1px solid var(--grey-100);">
+          <div class="section-title">Sources &amp; References</div>
+          <ul id="sources-list" style="padding-left:18px;font-family:var(--font-ui);font-size:14px;"></ul>
+        </div>
+      </article>
+      <aside id="sidebar"></aside>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">NewsFlash</div>
+        <p class="footer-desc">India's most trusted digital newsroom, delivering breaking stories with accuracy, depth and integrity.</p>
+      </div>
+      <div>
+        <h4>Sections</h4>
+        <ul>
+          <li><a href="#" onclick="filterCategory('India')">India</a></li>
+          <li><a href="#" onclick="filterCategory('World')">World</a></li>
+          <li><a href="#" onclick="filterCategory('Business')">Business</a></li>
+          <li><a href="#" onclick="filterCategory('Technology')">Technology</a></li>
+          <li><a href="#" onclick="filterCategory('Sports')">Sports</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Editorial Policy</a></li>
+          <li><a href="#">Advertise</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Follow Us</h4>
+        <ul>
+          <li><a href="#">𝕏 Twitter</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="footer-year"></span> NewsFlash Media Pvt. Ltd.</span>
+      <span><a href="#">Privacy Policy</a> · <a href="#">Terms of Use</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ADMIN OVERLAY -->
+<div id="admin-overlay">
+  <div id="admin-modal">
+
+    <!-- LOGIN -->
+    <div id="admin-login">
+      <h2>NewsFlash Admin</h2>
+      <p>Secure Login Panel</p>
+      <div id="login-error" class="error-msg hidden"></div>
+      <div class="admin-form">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="login-username" placeholder="Enter username" autocomplete="username" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="login-password" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()" />
+        </div>
+        <button class="btn-primary" onclick="doLogin()">Login to Admin</button>
+        <p style="margin-top:12px;text-align:center"><a href="#" onclick="closeAdmin()" style="font-family:var(--font-ui);font-size:13px;color:var(--grey-500)">✕ Close</a></p>
+      </div>
+    </div>
+
+    <!-- PANEL -->
+    <div id="admin-panel">
+      <!-- Mobile tabs -->
+      <div class="admin-mobile-tabs">
+        <button class="admin-tab-btn active" onclick="showAdminSection('dashboard',this)">Dashboard</button>
+        <button class="admin-tab-btn" onclick="showAdminSection('articles',this)">Articles</button>
+        <button class="admin-tab-btn" onclick="showAdminSection('new-article',this)">+ New</button>
+        <button class="admin-tab-btn" onclick="showAdminSection('settings',this)">Settings</button>
+        <button class="admin-tab-btn" onclick="doLogout()" style="color:#ff6b6b">Logout</button>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="admin-sidebar">
+        <div class="admin-logo">NewsFlash</div>
+        <a class="admin-nav-link active" onclick="showAdminSection('dashboard',this)">📊 Dashboard</a>
+        <a class="admin-nav-link" onclick="showAdminSection('articles',this)">📰 All Articles</a>
+        <a class="admin-nav-link" onclick="showAdminSection('new-article',this)">✏️ New Article</a>
+        <a class="admin-nav-link" onclick="showAdminSection('settings',this)">⚙️ Settings</a>
+        <a class="admin-nav-link logout-link" onclick="doLogout()">🚪 Logout</a>
+      </div>
+
+      <!-- Main content -->
+      <div class="admin-main">
+
+        <!-- Dashboard -->
+        <div id="section-dashboard" class="admin-section active">
+          <h2>Dashboard</h2>
+          <div class="stats-grid">
+            <div class="stat-card"><div class="stat-num" id="stat-total">—</div><div class="stat-label">Total Articles</div></div>
+            <div class="stat-card"><div class="stat-num" id="stat-published">—</div><div class="stat-label">Published</div></div>
+            <div class="stat-card"><div class="stat-num" id="stat-drafts">—</div><div class="stat-label">Drafts</div></div>
+            <div class="stat-card"><div class="stat-num" id="stat-views">—</div><div class="stat-label">Total Views</div></div>
+          </div>
+          <div class="section-title">Recent Articles</div>
+          <div id="recent-articles-list"></div>
+        </div>
+
+        <!-- All Articles -->
+        <div id="section-articles" class="admin-section">
+          <div class="admin-toolbar">
+            <h2 style="margin:0">All Articles</h2>
+            <button class="btn-add" onclick="showAdminSection('new-article')">+ New Article</button>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="articles-table">
+              <thead><tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr></thead>
+              <tbody id="admin-articles-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- New / Edit Article -->
+        <div id="section-new-article" class="admin-section">
+          <h2 id="form-title">New Article</h2>
+          <input type="hidden" id="edit-article-id" value="" />
+          <div class="article-form-grid">
+
+            <div class="form-group form-full">
+              <label>Headline *</label>
+              <input type="text" id="f-title" placeholder="Article headline…" />
+            </div>
+
+            <div class="form-group">
+              <label>Category *</label>
+              <select id="f-category">
+                <option>India</option><option>World</option><option>Business</option>
+                <option>Technology</option><option>Sports</option><option>Science</option>
+                <option>Health</option><option>Entertainment</option><option>Opinion</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Status</label>
+              <select id="f-status">
+                <option value="draft">Draft</option>
+                <option value="published">Published</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Author Name</label>
+              <input type="text" id="f-author" placeholder="e.g. Priya Sharma" />
+            </div>
+
+            <div class="form-group">
+              <label>Author Initials (Avatar)</label>
+              <input type="text" id="f-initials" placeholder="e.g. PS" maxlength="3" />
+            </div>
+
+            <div class="form-group form-full">
+              <label>Summary</label>
+              <textarea id="f-summary" placeholder="Brief description (shown in cards)…" style="min-height:70px"></textarea>
+            </div>
+
+            <!-- Image upload -->
+            <div class="form-group form-full">
+              <label>Featured Image</label>
+              <div class="img-upload-zone" onclick="document.getElementById('f-image-file').click()">
+                <input type="file" id="f-image-file" accept="image/*" onchange="handleImageUpload(this)" />
+                <div id="upload-prompt">📁 Click to upload image (JPG, PNG, WebP)</div>
+                <div id="upload-progress" class="upload-progress hidden"></div>
+                <img id="f-image-preview" class="img-preview" src="" alt="Preview" />
+              </div>
+              <input type="hidden" id="f-image-url" value="" />
+              <input type="text" id="f-image-caption" placeholder="Image caption…" style="margin-top:8px" />
+            </div>
+
+            <!-- Body editor -->
+            <div class="form-group form-full">
+              <label>Article Body *</label>
+              <div class="rich-toolbar">
+                <button type="button" class="rich-btn" onclick="fmt('bold')"><b>B</b></button>
+                <button type="button" class="rich-btn" onclick="fmt('italic')"><i>I</i></button>
+                <button type="button" class="rich-btn" onclick="fmt('underline')"><u>U</u></button>
+                <button type="button" class="rich-btn" onclick="fmt('formatBlock','h2')">H2</button>
+                <button type="button" class="rich-btn" onclick="fmt('formatBlock','h3')">H3</button>
+                <button type="button" class="rich-btn" onclick="fmt('formatBlock','blockquote')">"</button>
+                <button type="button" class="rich-btn" onclick="fmt('insertUnorderedList')">• List</button>
+                <button type="button" class="rich-btn" onclick="fmt('insertOrderedList')">1. List</button>
+              </div>
+              <div id="article-body-editor" contenteditable="true"></div>
+            </div>
+
+            <!-- Highlights -->
+            <div class="form-group form-full">
+              <label>Key Highlights (one per line)</label>
+              <textarea id="f-highlights" placeholder="First highlight&#10;Second highlight&#10;Third highlight" style="min-height:90px"></textarea>
+            </div>
+
+            <!-- Tags -->
+            <div class="form-group form-full">
+              <label>Tags</label>
+              <div class="tags-input-wrap" id="tags-wrap">
+                <input type="text" id="tags-input" placeholder="Type tag + Enter" onkeydown="handleTagInput(event)" />
+              </div>
+              <input type="hidden" id="f-tags" value="[]" />
+            </div>
+
+            <!-- Video -->
+            <div class="form-group">
+              <label>Video URL (optional)</label>
+              <input type="url" id="f-video-url" placeholder="YouTube embed URL…" />
+            </div>
+            <div class="form-group">
+              <label>Video Title</label>
+              <input type="text" id="f-video-title" placeholder="Video title…" />
+            </div>
+
+            <!-- Emoji -->
+            <div class="form-group">
+              <label>Feature Emoji</label>
+              <input type="text" id="f-emoji" placeholder="e.g. 🏛️" maxlength="4" />
+            </div>
+
+          </div>
+
+          <div class="form-actions">
+            <button class="btn-primary" style="width:auto;padding:11px 28px" onclick="saveArticle()">Save Article</button>
+            <button class="btn-secondary" onclick="cancelForm()">Cancel</button>
+          </div>
+
+        </div>
+
+        <!-- Settings -->
+        <div id="section-settings" class="admin-section">
+          <h2>Settings</h2>
+          <div class="settings-card">
+            <h3>Site Settings</h3>
+            <div class="form-group">
+              <label>Site Name</label>
+              <input type="text" id="s-site-name" value="NewsFlash" />
+            </div>
+            <div class="form-group">
+              <label>Tagline</label>
+              <input type="text" id="s-tagline" value="India's trusted digital newsroom" />
+            </div>
+            <button class="btn-primary" style="width:auto;padding:10px 24px" onclick="saveSettings()">Save Settings</button>
+          </div>
+          <div class="settings-card">
+            <h3>API Configuration</h3>
+            <p style="font-family:var(--font-ui);font-size:13px;color:var(--grey-500);margin-bottom:12px">Backend URL used for API calls:</p>
+            <div class="form-group">
+              <label>Backend API URL</label>
+              <input type="text" id="s-api-url" placeholder="https://your-backend.onrender.com" />
+            </div>
+            <button class="btn-primary" style="width:auto;padding:10px 24px" onclick="saveApiUrl()">Save API URL</button>
+          </div>
+        </div>
+
+      </div><!-- /admin-main -->
+    </div><!-- /admin-panel -->
+  </div><!-- /admin-modal -->
+</div><!-- /admin-overlay -->
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
