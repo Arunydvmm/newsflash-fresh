@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #FAFAF8;
+  color: #1A1A1A;
+}
+
+.font-serif  { font-family: 'Playfair Display', Georgia, serif; }
+.font-mono   { font-family: 'JetBrains Mono', monospace; }
+
+/* Breaking ticker */
+@keyframes ticker { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+.ticker-anim { animation: ticker 35s linear infinite; }
+.ticker-anim:hover { animation-play-state: paused; }
+
+/* Article body styles */
+.article-body h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px; font-weight: 700;
+  border-left: 4px solid #C62828;
+  padding-left: 12px;
+  margin: 2rem 0 0.75rem;
+  color: #1A1A1A;
+}
+.article-body p    { margin-bottom: 1.4em; font-size: 17px; line-height: 1.85; }
+.article-body blockquote {
+  border-left: 3px solid #E0DDD5;
+  padding: 6px 0 6px 18px;
+  color: #6B6B6B; font-style: italic;
+  font-size: 18px; margin: 1.5em 0;
+}
+.article-body ul { padding-left: 1.5rem; margin-bottom: 1.4em; }
+.article-body ul li { margin-bottom: 0.4em; font-size: 16px; line-height: 1.7; }
+.article-body a { color: #C62828; text-decoration: underline; }
