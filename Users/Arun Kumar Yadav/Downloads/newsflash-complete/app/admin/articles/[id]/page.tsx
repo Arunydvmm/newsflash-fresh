@@ -10,7 +10,7 @@ export default async function EditArticlePage({ params }: { params: { id: string
   if (!auth) redirect('/admin')
 
   await connectDB()
- const const article = await Article.findOne({ _id: params.id }).lean()
+  const article = await Article.findById(params.id).lean() as any
   if (!article) notFound()
 
   const safe = JSON.parse(JSON.stringify(article))
